@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.revolver.mapper.FrontEnd.CartMapper" >
+    <select id="selectCartById" parameterType="Integer" resultType="com.revolver.pojo.Product">
+        select p.* from product p,user_favorites c where p.id=c.product_id and c.user_id=#{value}
+    </select>
+
+    <delete id="deleteProductByArray" parameterType="map">
+        delete from user_favorites where user_id=#{uid} and product_id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="selectCartProductById" parameterType="map" resultType="int">
+        select count(*) from user_favorites where user_id=#{uid} and product_id=#{pid}
+    </select>
+
+    <insert id="insertCartById" parameterType="map">
+        insert into user_favorites(user_id,product_id) values(#{uid},#{pid});
+    </insert>
+</mapper>

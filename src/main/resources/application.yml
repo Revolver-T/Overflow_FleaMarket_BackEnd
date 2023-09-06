@@ -1,0 +1,39 @@
+server:
+  port: 1024
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/data?useSSL=false
+    username: root
+    password: 1234
+  mail:
+    host: smtp.163.com
+    port: 25
+    username: t18713827231@163.com
+    password: RWNKORILLAUDXFJE
+    default-encoding: utf-8
+    properties:
+      mail:
+        smtp:
+          socketFactoryClass: javax.net.ssl.SSLSocketFactory
+        #显示邮件发送信息
+        debug: true
+web:
+  upload-path: E:\Idea project\Used-Trading\src\main\resources\static
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.revolver.pojo
+  configuration:
+    map-underscore-to-camel-case: true
+
+mvc:
+  static-path-pattern: /**
+
+
+alipay:
+  appId: 9021000126642711
+  appPrivateKey: MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCkyuEGYU5reXS9q1VN3Od+JEm3FrvBs3Adx9DV1XrEDqzouXCLpKtZ+g9zEXcbkv6KcMchAR3hwyPQ8PdKKtU5ME8LtKaCagT/GrSIoK3qNxBRMlXfTk4MbW89LxCCRmgtxxa8b1SisIMzrV//hjEY55L8dly9ePVWUlJEt0KCNuTIZDJoBDlNS1HamQglk8MsR1QxJMCYDvf9F9jyqcE/STBPY/lQyP1cXVmN8Sq7h/vnTxl1ApfzZvTxOnmV1z3AQxuegb37a1JElcULcY/hRZIgOTvCxKn9hRfwgYvTVSIrHqvEI8D+Hp9ZWMIkU5UAtdj5eM/7Kmr76QWuF7aJAgMBAAECggEAVN094SE/V02m9v5C4eQ/OtDJPYZxjqEvvcZnH5ferxS3qunEscVNkPqb9jAqXILonrbRdYezsc3ipflSAFnqkJb2Phr8HPEoPY+tJSdKKPHOb2Iyotsain/Y53NTVyOXBuweI1BaD6ZDCtvgMiETK7YmFemGfPTLs3aVc1nE4HU6sfGmKFjjksTHe5kRgsm4s4K3Hob/YZOhAVF6CT5mywcGMVBPc+ayGLDxz+BP5y50GF69j/cDc91cykFz8sVV7Woa9qOMq+WHceKDBqkQHrbHVoff00jAghPq2b/mElIalYsiYrVp8jG54zc4i52EbtZzR4Q8jTb2m1rTrHgBuQKBgQDtq9VzRcgEK16Km7ovxz+KwwH1+BAdIX+Uu57zKJWxTSLIC6n4bu+tY+5CwpZ49YKNkeY0Bw6Vd1qbJVZSnyF8OsSXXUcTsIZy2XhtejpFUL0FM7ItDrg2Ks1ziJ/eYw63I/ZdoMat93wUuPeHBtxXfglg+htdc8wW3uHb7T89LwKBgQCxgEEx5cnamS0wlfWbhW3JS0iYNboh/q0aIJwNYOn+nEmAlIFGjuGI5PKBkoZuqeSES0jnBFzushv4pfaksazQt2tt7vyX4ULfkxbAT0zP5g6gNfFmJtalC2+m2cpJQHTsbxOdBnctdKcnFid2xhlhfesuokSkr6omxEkdtp+JxwKBgDrcrs2Qv7vAnfaIIPGKUENmjorDeAIu9LD6UqB4MbKqnu2abesYVoXD1RN1q9yjOUUkmDXUdZkw6SC5e4qU3K8uwteWA29t7a5uC7RZbCsUluu95Ofh2F+Z9C4j7SwfrlpPLsn7cplNTM65DJzFZzbIATyiVLqtXiNf6eIU/O+DAoGADn7S1ChX26o2rokQjarP1Gh5fTSmBrCtojyXgeAwO8K3nfCCvihc8rj/tOUqZU8qgkNDqNoKXNPexOeIxNpdqo3QECI8LosO0wNIEFxpgXDgMOU22YjCbqgIbi/K/UBuTACmMWSdxvCH1gFRJ7n1yKhn1F8cC/bshk3xSqPnU3ECgYBF7JVfqFRJuXBuYEVRjIOQcNr+DBqOJl+eqISXdkSHmaJ6ZjjRb0uYPY6qQ4W18DZZyRsbJRVbfKQCFfs/7eUXtlzJjvlFUj53xb5bnHK63F0eqi7zMrLQIIv9e9lmzqpPQkq4q8SlZAh/HUuAxNUHLChWpFGM3Urxl1jaZsakvg==
+  alipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqgbojenL8L8YbJZ2Bai7aAxbRCDwgYl9ctpgXWlpYIPVbIzFRtxvSSoZ24gvfoAj7qJKPZ7+SXPFzXw86AufoB9bLjKC6O739tqyl2pouzFqoHFgZ94efaklOWXylmioL0Z3G02nH75fJiq/HWw0gCgyi032ploHC3TQb905EcCasHP0XikedbaHbpR88ZHOqlRZ5M/gCQRVYWSXGHCPVIZ96h426fSkh5FK0NjNuZrkEHFJBzSbHsSxhg8dG6TkCrjpuEV9hH1uA/W2w/L2nBPbh4G+X31Ji3FseVC/9y0l6xkTBdcvQ7YxygFs4IBczKi0c9evFzcy71hR9/xC0wIDAQAB
+  notifyUrl: http://jzrk3e.natappfree.cc/alipay/notify
+  returnUrl: http://localhost:8080

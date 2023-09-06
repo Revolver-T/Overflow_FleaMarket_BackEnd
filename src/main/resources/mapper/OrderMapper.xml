@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.revolver.mapper.FrontEnd.OrderMapper" >
+    <insert id="insertOrderByOrder" parameterType="com.revolver.pojo.Order">
+        insert into orders(order_id,create_person_id,create_time,product_count,product_total,receiver,receiver_phone,receiver_mail,address
+        <if test="remark!=null and remark!=''">
+            ,remark
+        </if>
+        )
+        values(#{orderId},#{createPersonId},#{createTime},#{productCount},#{productTotal},#{receiver},#{receiverPhone},#{receiverMail},#{address}
+        <if test="remark!=null and remark!=''">
+            ,#{remark}
+        </if>
+        )
+    </insert>
+
+    <insert id="insertOrderProduct" parameterType="list">
+        insert into order_product(order_id,product_id) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.order_id},#{item.product_id})
+        </foreach>
+    </insert>
+
+    <resultMap id="resultOrderMap" type="com.revolver.pojo.Order">
+        <result property="id" column="id" />
+        <result property="orderId" column="order_id" />
+        <result property="createPersonId" column="create_person_id" />
+<!--        <result property="cre" column="createperson" />-->
+        <result property="createTime" column="create_time" />
+        <result property="payed" column="paed" />
+        <result property="payTime" column="pay_time" />
+        <result property="productCount" column="product_number" />
+        <result property="productTotal" column="product_total" />
+        <result property="receiver" column="receiver" />
+        <result property="receiverPhone" column="receiver_phone" />
+        <result property="receiverMail" column="receiver_mail" />
+        <result property="address" column="address" />
+        <result property="remark" column="remark" />
+<!--        <result property="" column="status" />-->
+        
+        <collection property="products" ofType="com.revolver.pojo.Product" column="pid">
+            <id property="id" column="id" javaType="int" jdbcType="INTEGER" />
+            <result property="name" column="name" javaType="string" jdbcType="VARCHAR" />
+            <result property="details" column="details" javaType="string" jdbcType="VARCHAR" />
+            <result property="images" column="images" javaType="string" jdbcType="VARCHAR" />
+            <result property="price" column="price" javaType="int" jdbcType="DECIMAL" />
+        </collection>
+    </resultMap>
+    <select id="selectOrderById" parameterType="String" resultMap="resultOrderMap">
+        select o.*,p.id pid,p.name,p.details,p.images,p.price from orders o,product p,order_product op where
+        o.order_id = op.order_id and p.id = op.product_id and o.order_id = #{value}
+    </select>
+
+    <update id="updateOrderByOid" parameterType="com.revolver.pojo.Order">
+        update orders
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="payed!=null and payed!=''">
+                payed=#{payed},
+            </if>
+            <if test="payTime!=null">
+                pay_time=#{payTime},
+            </if>
+            <if test="address!=null and address!=''">
+                address=#{address},
+            </if>
+        </trim>
+        where order_id=#{orderId}
+    </update>
+
+    <delete id="deleteOrderByOid" parameterType="com.revolver.pojo.Order">
+        delete from orders where order_id=#{orderId};
+    </delete>
+
+    <delete id="deleteOrderProductByOid" parameterType="com.revolver.pojo.Order">
+        delete from order_product where order_id=#{orderId};
+    </delete>
+
+    <select id="selectOrderByUserId" parameterType="Integer" resultType="com.revolver.pojo.Order">
+        select o.* from orders o where o.create_person_id=#{userid} order by o.create_time desc;
+    </select>
+
+    <select id="selectOrderByList" resultType="com.revolver.pojo.Order">
+        select * from orders where 1=1
+        <if test="order_id!=null">
+            and orders.order_id like concat('%','${oid}','%')
+        </if>
+        <if test="payed!=null">
+            and payed=#{pay}
+        </if>
+        <if test="receiver_phone!=null">
+            and receiver_phone=#{phone}
+        </if>
+    </select>
+
+    <select id="selectOrderProductByUserId" parameterType="Integer" resultType="map">
+        select
+            p.*,op.status opstatus,u.username,o.order_id
+        from
+            order_product op,product p,orders o,user u
+        where
+            op.product_id=p.id
+        and
+            op.order_id=o.order_id
+        and
+            o.create_person_id=#{value}
+        and
+            o.create_person_id = u.id
+        order by
+            o.create_time
+        desc;
+    </select>
+
+    <update id="updateOrderById" parameterType="map">
+        update order_product set status=#{status} where product_id=#{pid};
+    </update>
+</mapper>

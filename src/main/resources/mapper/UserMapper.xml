@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.revolver.mapper.FrontEnd.UserMapper" >
+  <select id="toLogin" resultType="com.revolver.pojo.Account" parameterType="com.revolver.pojo.Account" >
+    select user_id,username,password from account where
+    1=1
+    <if test="username != null" >
+      and username = #{username}
+    </if>
+    <if test="password != null" >
+      and password = #{password}
+    </if>
+  </select>
+
+
+
+  <select id="selectUserById" resultType="com.revolver.pojo.User" parameterType="Integer" >
+    select * from user where id = #{value}
+  </select>
+
+
+  <update id="updateUserById" parameterType="com.revolver.pojo.User">
+    update user
+    <trim prefix="set" suffixOverrides=",">
+      <if test="username!=null">username=#{username},</if>
+      <if test="userImg!=null">user_img=#{userImg},</if>
+      <if test="phone!=null">phone=#{phone},</if>
+      <if test="mail!=null">mail=#{mail},</if>
+      <if test="birthday!=null">birthday=#{birthday},</if>
+      <if test="address!=null">address=#{address},</if>
+      <if test="sex!=null">sex=#{sex},</if>
+    </trim>
+    WHERE id=#{id}
+  </update>
+
+
+  <update id="updateAccountById" parameterType="com.revolver.pojo.User">
+    update account
+    <trim prefix="set" suffixOverrides=",">
+      <if test="username!=null">username=#{username},</if>
+    </trim>
+    WHERE user_id=#{id}
+  </update>
+
+  <select id="selectCountById" parameterType="Integer" resultType="Integer">
+    select count(*) from product where uid = #{value}
+  </select>
+
+
+  <delete id="deleteUserById" parameterType="Integer">
+    delete from user where id=#{value};
+    delete from account where user_id=#{value};
+  </delete>
+
+
+  <update id="restAccountById" parameterType="Integer">
+    update account set password='123456' where user_id=#{value}
+  </update>
+
+  <insert id="insertUserInfo" parameterType="com.revolver.pojo.User" useGeneratedKeys="true" keyProperty="id">
+    insert into user(username,phone,mail,birthday,address,sex) values(
+      <trim prefix="" suffixOverrides=",">
+        <if test="username!=null">
+          #{username},
+        </if>
+        <if test="phone!=null">
+          #{phone},
+        </if>
+        <if test="mail!=null">
+          #{mail},
+        </if>
+        <if test="birthday!=null">
+          #{birthday},
+        </if>
+        <if test="address!=null">
+          #{address},
+        </if>
+        <if test="sex!=null">
+          #{sex},
+        </if>
+      </trim>
+    )
+  </insert>
+
+  <insert id="insertUserToAccount" parameterType="com.revolver.pojo.Account">
+    insert into account(user_id,username,password) values(#{userId},#{username},#{password});
+  </insert>
+
+  <select id="selectCartCountById" parameterType="Integer" resultType="Integer">
+
+    select count(product_count) from orders o,user u where o.create_person_id=#{value};
+  </select>
+
+  <select id="selectCommentById" parameterType="Integer" resultType="Integer">
+    select count(*) from comment where user_id=#{value};
+  </select>
+
+  <select id="selectAccountById" parameterType="Integer" resultType="com.revolver.pojo.Account">
+    select * from account where user_id=#{value}
+  </select>
+
+</mapper>

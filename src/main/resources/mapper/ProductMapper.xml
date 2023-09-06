@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.revolver.mapper.FrontEnd.ProductMapper" >
+
+    <select id="selectByNew" resultType="com.revolver.pojo.Product">
+        select * from product where DATE_SUB(CURDATE(),INTERVAL 7 DAY) and status=1 order By create_time desc;
+    </select>
+
+    <select id="selectByHot" resultType="com.revolver.pojo.Product">
+        select * from product where status=1 ORDER BY clicks desc LIMIT 12;
+
+    </select>
+
+    <select id="selectProductById" parameterType="Integer" resultType="map">
+        select p.*,u.username from product p,user u where p.uid=u.id and p.id = #{value};
+    </select>
+
+    <select id="selectScProductById" parameterType="Map" resultType="com.revolver.pojo.Product">
+        select p.* from product p,first_classification f,second_classification s where p.sid=s.id and s.fcid=f.id
+        <if test="id!=0">
+            and s.fcid=#{id}
+        </if>
+        <if test="searchText!=null">
+            and p.name like concat('%','${searchText}','%')
+        </if>
+        <if test="ids!=null and ids.size()>0">
+            and s.id in
+            <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="priceInterval!=null and priceInterval.size()>0">
+            and  price BETWEEN ${priceInterval.min} and ${priceInterval.max}
+        </if>
+        <if test="timeInterval!=0">
+            and create_time BETWEEN DATE_SUB(CURDATE(),INTERVAL #{timeInterval} DAY)  AND CURRENT_DATE;
+        </if>
+    </select>
+
+    <insert id="insertProductByUser" parameterType="com.revolver.pojo.Product">
+        insert into
+        product
+        (
+        <trim prefix="" suffixOverrides=",">
+            <if test="name!=null">
+                name,
+            </if>
+            <if test="details!=null">
+                details,
+            </if>
+            <if test="images!=null">
+                images,
+            </if>
+            <if test="clicks!=null">
+                clicks,
+            </if>
+            <if test="createTime!=null">
+                create_time,
+            </if>
+            <if test="price!=null">
+                price,
+            </if>
+            <if test="deal!=null">
+                deal,
+            </if>
+            <if test="address!=null">
+                address,
+            </if>
+            <if test="comments!=null">
+                comments,
+            </if>
+            <if test="sid!=0">
+                sid,
+            </if>
+            <if test="uid!=0">
+                uid
+            </if>
+        </trim>
+        )
+        values
+        (
+        <trim prefix="" suffixOverrides=",">
+            <if test="name!=null">
+                #{name},
+            </if>
+            <if test="details!=null">
+                #{details},
+            </if>
+            <if test="images!=null">
+                #{images},
+            </if>
+            <if test="clicks!=null">
+                #{clicks},
+            </if>
+            <if test="createTime!=null">
+                #{createTime},
+            </if>
+            <if test="price!=null">
+                #{price},
+            </if>
+<!--            <if test="currentprice != null">-->
+<!--                #{currentprice},-->
+<!--            </if>-->
+            <if test="deal != null">
+                #{deal},
+            </if>
+            <if test="address != null">
+                #{address},
+            </if>
+            <if test="comments != null">
+                #{comments},
+            </if>
+            <if test="sid != 0">
+                #{sid},
+            </if>
+            <if test="uid != 0">
+                #{uid}
+            </if>
+        </trim>
+        )
+    </insert>
+
+    <select id="selectCommentById" resultType="map" parameterType="Integer">
+        select u.id uid,u.username,u.user_img,c.* from comment c,user u where c.user_id=u.id and c.product_id=#{value}  order by c.id desc;
+    </select>
+
+    <insert id="insertProductToLove" parameterType="map">
+        insert into user_favorites(user_id,product_id) value (#{uid},#{pid});
+    </insert>
+
+    <select id="selectLoveById" resultType="int" parameterType="map">
+        select count(*) from user_favorites where user_id=#{uid} and product_id=#{pid}
+    </select>
+
+    <insert id="insertComment" parameterType="map">
+        insert into comment(product_id,user_id,text,time) value (#{pid},#{uid},#{text},#{time})
+    </insert>
+
+    <select id="selectMyCollectById" resultType="com.revolver.pojo.Product" parameterType="Integer">
+        select p.* from user_favorites u,product p where u.product_id=p.id and u.user_id=#{value}
+    </select>
+
+    <select id="selectMyProductById" resultType="map" parameterType="Integer">
+        select p.*,ifnull(op.status,0) opstatus,op.order_id oid from product p left join order_product op on op.product_id=p.id where  uid=#{value} order by create_time desc
+    </select>
+
+    <update id="updateProductByUser" parameterType="com.revolver.pojo.Product">
+        update product
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="sid!=0">
+                sid=#{sid},
+            </if>
+            <if test="price!=null">
+                price=#{price},
+            </if>
+<!--            <if test="originalprice!=null">-->
+<!--                originalprice=#{originalprice},-->
+<!--            </if>-->
+            <if test="deal!=null">
+                deal=#{deal},
+            </if>
+            <if test="address!=null">
+                address=#{address},
+            </if>
+            <if test="details!=null">
+                details=#{details},
+            </if>
+            <if test="images!=null">
+                images=#{images},
+            </if>
+            <if test="clicks!=0">
+                clicks=#{clicks},
+            </if>
+            <if test="comments!=null">
+                comments=#{comments},
+            </if>
+            <if test="status!=null">
+                status=#{status},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteProductById" parameterType="int">
+        delete from product where id=#{value}
+    </delete>
+
+    <delete id="deleteProductToLove" parameterType="map">
+        delete from user_favorites where user_id=#{uid} and product_id=#{pid}
+    </delete>
+
+    <update id="updateCommentById" parameterType="map">
+        update comment set status=#{status} where id=#{id}
+    </update>
+
+    <update id="soldOutProduct">
+        update product p,order_product op set p.status=2,p.payed=2 where p.id=op.product_id;
+    </update>
+
+    <select id="selectByCommend" resultType="Product">
+        select p.* from product p where status=1 order by create_time desc;
+    </select>
+
+    <update id="updateOrderProductStatus" parameterType="map">
+        update order_product set status=#{status} where order_id=#{oid} and product_id=#{pid};
+    </update>
+</mapper>

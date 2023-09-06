@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.revolver.mapper.FrontEnd.ClassifyMapper" >
+    <select id="selectAllclass" resultType="com.revolver.pojo.FirstClassification">
+        select * from first_classification order by id;
+    </select>
+
+    <select id="selectListScById" parameterType="Integer" resultType="com.revolver.pojo.SecondClassification">
+        select * from second_classification where fcid = #{value};
+    </select>
+
+    <select id="selectFcById" parameterType="Integer" resultType="com.revolver.pojo.FirstClassification">
+        select * from first_classification where id = #{value};
+    </select>
+
+    <select id="selectFcScByList" resultType="map">
+        select f.id,f.name,s.id sid,s.name sname from first_classification f,second_classification s where f.id = s.fcid;
+    </select>
+
+    <select id="selectScById" resultType="com.revolver.pojo.SecondClassification">
+        select * from second_classification where id=#{value}
+    </select>
+
+    <select id="selectScList" resultType="com.revolver.pojo.SecondClassification">
+        select * from second_classification;
+    </select>
+</mapper>
