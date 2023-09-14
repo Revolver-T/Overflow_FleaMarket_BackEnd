@@ -30,4 +30,6 @@ public interface UserMapper {
     Account selectAccountById(int id);
 
     int updateAccountById(User user);
+
+    int deleteAccountById(Integer id);
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.revolver.mapper.FrontEnd.ClassifyMapper" >
-    <select id="selectAllclass" resultType="com.revolver.pojo.FirstClassification">
+    <select id="selectAllClass" resultType="com.revolver.pojo.FirstClassification">
         select * from first_classification order by id;
     </select>
 

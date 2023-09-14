@@ -86,4 +86,9 @@ public class ProductServiceImpl implements ProductService {
     public int updateOrderProductStatus(Map<String, Object> map) {
         return productMapper.updateOrderProductStatus(map);
     }
+
+    @Override
+    public int deleteProductByUserId(int id) {
+        return productMapper.deleteProductByUserId(id);
+    }
 }

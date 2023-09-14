@@ -1,18 +1,25 @@
 package com.revolver.service.FrontEnd.impl;
 
+import com.revolver.mapper.FrontEnd.OrderMapper;
+import com.revolver.mapper.FrontEnd.ProductMapper;
 import com.revolver.mapper.FrontEnd.UserMapper;
 import com.revolver.pojo.Account;
 import com.revolver.pojo.User;
 import com.revolver.service.FrontEnd.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserServiceImpl implements UserService {
     
     @Autowired
     private UserMapper userMapper;
-    
+
+    @Autowired
+    private ProductMapper productMapper;
+    @Autowired
+    private OrderMapper orderMapper;
     @Override
     public Account toLogin(Account account) {
         if(account.getUsername().isEmpty()){
@@ -47,8 +54,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public int deleteUserById(Integer id) {
-        return userMapper.deleteUserById(id);
+         userMapper.deleteUserById(id);
+         productMapper.deleteProductByUserId(id);
+         orderMapper.deleteOrderByUserId(id);
+         return userMapper.deleteAccountById(id);
     }
 
     @Override

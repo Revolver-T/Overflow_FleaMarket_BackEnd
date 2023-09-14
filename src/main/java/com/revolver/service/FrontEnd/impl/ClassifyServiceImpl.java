@@ -16,8 +16,8 @@ public class ClassifyServiceImpl implements ClassifyService {
     private ClassifyMapper classifyMapper;
 
     @Override
-    public List<FirstClassification> selectAllclass() {
-        return classifyMapper.selectAllclass();
+    public List<FirstClassification> selectAllClass() {
+        return classifyMapper.selectAllClass();
     }
     @Override
     public List<SecondClassification> selectListScById(int id) {

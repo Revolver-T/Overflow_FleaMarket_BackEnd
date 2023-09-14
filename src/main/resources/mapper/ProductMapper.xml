@@ -207,4 +207,9 @@
     <update id="updateOrderProductStatus" parameterType="map">
         update order_product set status=#{status} where order_id=#{oid} and product_id=#{pid};
     </update>
+
+    <delete id="deleteProductByUserId" parameterType="int">
+        delete from product where uid=#{value}
+    </delete>
+
 </mapper>

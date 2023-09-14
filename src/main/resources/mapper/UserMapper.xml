@@ -49,6 +49,9 @@
 
   <delete id="deleteUserById" parameterType="Integer">
     delete from user where id=#{value};
+  </delete>
+
+  <delete id="deleteAccountById" parameterType="Integer">
     delete from account where user_id=#{value};
   </delete>
 

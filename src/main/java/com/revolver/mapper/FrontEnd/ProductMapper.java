@@ -2,7 +2,6 @@ package com.revolver.mapper.FrontEnd;
 
 import com.revolver.pojo.Product;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -46,4 +45,6 @@ public interface ProductMapper {
     List<Product> selectByCommend();
     //修改我的商品售出状态
     int updateOrderProductStatus(Map<String, Object> map);
+
+    int deleteProductByUserId(int id);
 }

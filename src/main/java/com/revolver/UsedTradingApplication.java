@@ -6,7 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-@MapperScan("com.revolver.mapper.FrontEnd")
+@MapperScan("com.revolver.mapper")
 @SpringBootApplication
 public class UsedTradingApplication {
 

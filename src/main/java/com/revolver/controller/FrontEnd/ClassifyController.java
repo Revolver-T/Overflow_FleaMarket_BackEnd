@@ -22,9 +22,9 @@ public class ClassifyController {
      * 查询一级分类列表
      * @return
      */
-    @RequestMapping(value = "/flnb",method = RequestMethod.GET)
-    public List<FirstClassification> selectAllclass(){
-        return classifyService.selectAllclass();
+    @RequestMapping(value = "/fcList",method = RequestMethod.GET)
+    public List<FirstClassification> selectAllClass(){
+        return classifyService.selectAllClass();
     }
 
     /**

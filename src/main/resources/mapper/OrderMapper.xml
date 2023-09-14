@@ -75,20 +75,25 @@
         delete from order_product where order_id=#{orderId};
     </delete>
 
+
+    <delete id="deleteOrderByUserId" parameterType="com.revolver.pojo.Order">
+        delete from orders where data.orders.create_person_id =#{id};
+    </delete>
+
     <select id="selectOrderByUserId" parameterType="Integer" resultType="com.revolver.pojo.Order">
         select o.* from orders o where o.create_person_id=#{userid} order by o.create_time desc;
     </select>
 
     <select id="selectOrderByList" resultType="com.revolver.pojo.Order">
         select * from orders where 1=1
-        <if test="order_id!=null">
-            and orders.order_id like concat('%','${oid}','%')
+        <if test="orderId != null">
+            and order_id like concat('%','${orderId}','%')
         </if>
-        <if test="payed!=null">
-            and payed=#{pay}
-        </if>
-        <if test="receiver_phone!=null">
-            and receiver_phone=#{phone}
+<!--        <if test="payed!=null">-->
+<!--            and payed=#{payed}-->
+<!--        </if>-->
+        <if test="receiverPhone!=null">
+            and receiver_phone=#{receiverPhone}
         </if>
     </select>
 

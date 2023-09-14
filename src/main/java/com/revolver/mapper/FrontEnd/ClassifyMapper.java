@@ -12,7 +12,7 @@ import java.util.Map;
 public interface ClassifyMapper {
 
     //一级分类列表接口
-    List<FirstClassification> selectAllclass();
+    List<FirstClassification> selectAllClass();
     //二级分类列表接口
     List<SecondClassification> selectListScById(int id);
     //一级分类对象接口

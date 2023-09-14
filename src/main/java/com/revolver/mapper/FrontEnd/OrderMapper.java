@@ -27,4 +27,6 @@ public interface OrderMapper {
     int updateOrderById(Map<String,Object> map);
 
     int deleteOrderProductByOid(Order order);
+
+    int deleteOrderByUserId(Integer id);
 }

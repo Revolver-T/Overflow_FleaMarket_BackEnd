@@ -25,4 +25,6 @@ public interface ProductService {
     public int soldOutProduct();
     public List<Product> selectByCommend();
     public int updateOrderProductStatus(Map<String, Object> map);
+
+    public int deleteProductByUserId(int id);
 }
