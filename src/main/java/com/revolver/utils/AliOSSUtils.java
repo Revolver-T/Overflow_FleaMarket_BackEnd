@@ -20,8 +20,8 @@ public class AliOSSUtils {
     private String endpoint = "https://oss-cn-beijing.aliyuncs.com";
     // 填写Bucket
     private String bucketName = "used-trading";
-    private String accessKeyId = "LTAI5tHhVzwcUxVyQ6JEVMhq";
-    private String accessKeySecret = "DPJdE5viuaCflzs7GjnDWtv43aCDEH";
+    private String accessKeyId = "";
+    private String accessKeySecret = "";
 
     /**
      * 实现上传图片到OSS
